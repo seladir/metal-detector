@@ -16,6 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 #RUN pip install gunicorn
 #RUN pip install Flask
 #RUN pip install pandas
+#RUN pip install scikit-learn
 #RUN pip freeze
 
 CMD ["gunicorn", "--reload", "-t 24000", "-w 2", "-b", "0.0.0.0:7000", "main:app"]
