@@ -91,7 +91,7 @@ def detect_fore(y, sr):
     return diff, position
 
 
-def detect(filename):
+def analyze(filename):
     duration = detect_duration(filename)
 
     y, sr = librosa.load(filename, duration=duration/2, offset=duration/4)

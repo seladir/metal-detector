@@ -13,6 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 #RUN pip install matplotlib
 #RUN pip install librosa
 #RUN pip install redis
+#RUN pip install pika
 #RUN pip install gunicorn
 #RUN pip install Flask
 #RUN pip install pandas
