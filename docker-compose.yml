@@ -2,10 +2,11 @@ version: '3.5'
 services:
     detector:
         build:
-            context: ./detector/
+            context: ./detector
             dockerfile: Dockerfile
         volumes:
-            - ./detector/:/usr/src/app
+            - ./detector:/usr/src/app
+            - ./shared:/usr/src/shared
         ports:
             - "7000:7000"
         environment:
@@ -14,7 +15,30 @@ services:
             - redis:redis
         depends_on:
             - redis
+            - mq
+    api:
+        build:
+            context: ./api
+            dockerfile: Dockerfile
+        ports:
+            - '7001:7001'
+        volumes:
+            - ./api:/usr/src/app
+            - ./shared:/usr/src/shared
+        environment:
+            NODE_ENV: development
+            PORT: 7001
+            CLIENT_HOST: http://web:3000
+            DB_USERNAME: sankaku
+            DATABASE: sankaku_payments_dev
+            DB_HOST: db
+            DB_DIALECT: postgres
+        links:
+            - redis:redis
+        depends_on:
+            - redis
+            - mq
     redis:
-        image: "redis:6.0.8-alpine"
-        expose:
-            - "6379"
+        image: "redis:6-alpine"
+    mq:
+        image: rabbitmq:3-alpine
