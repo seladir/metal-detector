@@ -19,7 +19,8 @@ module.exports = async (req, res) => {
   }
 
   const filename = uploadedFile.md5
-  await uploadedFile.mv(path.join(uploadDir, filename))
+  const fullname = path.join(uploadDir, filename)
+  await uploadedFile.mv(fullname)
 
   const id = uuid.v4()
 
@@ -27,7 +28,7 @@ module.exports = async (req, res) => {
     id,
     status: 'scheduled',
     result: {},
-    filename,
+    fullname,
   }
 
   redisHelper.set(`track_${id}`, JSON.stringify(trackData))

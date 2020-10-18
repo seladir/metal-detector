@@ -1,4 +1,6 @@
+const fs = require('fs-extra')
 const amqp = require('amqplib')
+const redisHelper = require('../redisHelper')
 
 let channel = null
 const queue = 'detection-response'
@@ -18,7 +20,18 @@ async function connect() {
     .then(() => {
       return channel.consume(queue, (msg) => {
         if (msg !== null) {
-          console.log(msg.content.toString())
+          const rawMessage = msg.content.toString()
+          console.log(rawMessage)
+
+          const trackData = JSON.parse(rawMessage)
+          redisHelper.set(`track_${trackData.id}`, JSON.stringify(trackData))
+
+          if (trackData.status === 'finished') {
+            fs.unlink(trackData.fullname).catch((e) => {
+              // ignore
+            })
+          }
+
           channel.ack(msg)
         }
       })
