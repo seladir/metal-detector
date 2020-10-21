@@ -19,7 +19,7 @@ services:
     api:
         build:
             context: ./api
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.dev
         ports:
             - '7001:7001'
         volumes:
@@ -33,15 +33,6 @@ services:
         depends_on:
             - redis
             - mq
-    web:
-        build:
-            context: ./app
-            dockerfile: Dockerfile
-            args:
-                NODE_ENV: production
-                API_URL: http://localhost:7001/api
-        ports:
-            - '7002:80'
     redis:
         image: "redis:6-alpine"
     mq:

@@ -10,7 +10,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "preinstall": "npm i nodemon -g",
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "amqplib": "^0.6.0",
