@@ -1,14 +1,12 @@
 const express = require('express')
+const router = require('express').Router()
 const fileUpload = require('express-fileupload')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const errorHandler = require('./middlewares/errorHandler')
-const asyncHandler = require('./lib/asyncHandler')
-const detectFile = require('./routes/detectFile')
-const detectLink = require('./routes/detectLink')
-const detectGet = require('./routes/detectGet')
 const receiver = require('./helpers/mq/receiver')
 const sender = require('./helpers/mq/sender')
+const routes = require('./routes')
 
 async function appFactory() {
   const app = express()
@@ -21,14 +19,13 @@ async function appFactory() {
   app.use(cors())
   app.use(bodyParser.json())
 
-  app.get('/', (req, res) => {
+  app.get('/api', (req, res) => {
     sender()
     res.send('Hello world!')
   })
 
-  app.post('/detect-file', asyncHandler(detectFile))
-  app.post('/detect-link', asyncHandler(detectLink))
-  app.get('/detect/:id', asyncHandler(detectGet))
+  router.use(routes)
+  app.use('/api', router);
 
   //
   // if (process.env.NODE_ENV === 'production' || JSON.parse(process.env.PROXY_ENABLED || 'false')) {

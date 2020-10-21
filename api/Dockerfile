@@ -2,6 +2,9 @@ FROM node:14-buster
 
 WORKDIR /usr/src/app
 
+ARG PORT
+ENV PORT ${PORT}
+
 RUN apt-get update && apt-get install -y ffmpeg
 
 COPY package.json yarn.lock* ./

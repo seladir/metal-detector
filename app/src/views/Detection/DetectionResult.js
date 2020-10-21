@@ -108,9 +108,14 @@ function updateStatus(id, handleChangeResult, handleChangeStatus, setLoading) {
             }
           })
           .catch(() => {
-            setTimeout(updateStatus, 1000, id, handleChangeResult, handleChangeStatus, setLoading)
+            handleChangeStatus('failed');
+            setLoading(false);
           })
       }
+    })
+    .catch(() => {
+      handleChangeStatus('failed');
+      setLoading(false);
     })
 }
 
