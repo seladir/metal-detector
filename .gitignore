@@ -2,3 +2,7 @@ detector/.idea/
 detector/__pycache__/
 detector/tracks/
 shared/uploads/
+app/.idea/
+app/node_modules/
+app/build/
+app/.env

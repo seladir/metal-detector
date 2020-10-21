@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
 
   const trackData = {
     id,
-    status: 'scheduled',
+    status: 'starting',
     result: {},
     fullname,
   }

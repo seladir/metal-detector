@@ -1,11 +1,11 @@
 const uuid = require('uuid')
 const redisHelper = require('../helpers/redisHelper')
-const { badRequest } = require('../lib/errors')
+const { notFound } = require('../lib/errors')
 
 module.exports = async (req, res) => {
   const id = req.params.id
   if (!uuid.validate(id)) {
-    return badRequest(res, 'incorrect_id')
+    return notFound(res)
   }
 
   let trackData = {}
@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
     }
     trackData = JSON.parse(encodedData)
   } catch (e) {
-    return badRequest(res, 'no_data')
+    return notFound(res)
   }
 
   let result = {}
@@ -41,11 +41,11 @@ module.exports = async (req, res) => {
 
     result = {
       first: {
-        genre: firstGenre + 1,
+        genre: firstGenre,
         probability: firstProb,
       },
       second: {
-        genre: secondGenre + 1,
+        genre: secondGenre,
         probability: secondProb,
       },
     }

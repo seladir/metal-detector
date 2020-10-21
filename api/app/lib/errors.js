@@ -23,6 +23,13 @@ function badRequest(res, code) {
   })
 }
 
+function notFound(res) {
+  return res.status(404).json({
+    success: false,
+    code: 'not_found',
+  })
+}
+
 function safe(res, asyncFn, req) {
   return (...args) => {
     const result = asyncFn(...args)
@@ -52,4 +59,5 @@ function safe(res, asyncFn, req) {
 module.exports = {
   safe,
   badRequest,
+  notFound,
 }

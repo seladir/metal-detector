@@ -4,7 +4,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const errorHandler = require('./middlewares/errorHandler')
 const asyncHandler = require('./lib/asyncHandler')
-const detectCreate = require('./routes/detectCreate')
+const detectFile = require('./routes/detectFile')
+const detectLink = require('./routes/detectLink')
 const detectGet = require('./routes/detectGet')
 const receiver = require('./helpers/mq/receiver')
 const sender = require('./helpers/mq/sender')
@@ -25,7 +26,8 @@ async function appFactory() {
     res.send('Hello world!')
   })
 
-  app.post('/detect', asyncHandler(detectCreate))
+  app.post('/detect-file', asyncHandler(detectFile))
+  app.post('/detect-link', asyncHandler(detectLink))
   app.get('/detect/:id', asyncHandler(detectGet))
 
   //
