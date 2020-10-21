@@ -23,7 +23,6 @@ services:
         ports:
             - '7001:7001'
         volumes:
-            - ./api:/usr/src/app
             - ./shared:/usr/src/shared
         environment:
             NODE_ENV: production
