@@ -98,12 +98,13 @@ function updateStatus(id, handleChangeResult, handleChangeStatus, setLoading) {
               }
 
               handleChangeResult({title, description})
-              setLoading(false);
             }
             handleChangeStatus(data.status)
 
-            if (data.status !== 'finished') {
+            if (data.status === 'processing' || data.status === 'starting') {
               setTimeout(updateStatus, 1000, id, handleChangeResult, handleChangeStatus, setLoading)
+            } else {
+              setLoading(false);
             }
           })
           .catch(() => {

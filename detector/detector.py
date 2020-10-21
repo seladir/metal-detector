@@ -29,33 +29,42 @@ classifier.fit(X_train, y_train)
 
 
 def detect(data, channel):
-    response = {
-        'id': data['id'],
-        'status': 'processing',
-        'result': {},
-        'fullname': data['fullname'],
-    }
-    channel.basic_publish(exchange='', routing_key='detection-response', body=json.dumps(response))
+    try:
+        response = {
+            'id': data['id'],
+            'status': 'processing',
+            'result': {},
+            'fullname': data['fullname'],
+        }
+        channel.basic_publish(exchange='', routing_key='detection-response', body=json.dumps(response))
 
-    print(data)
+        print(data)
 
-    file_params = analyzer.analyze(data['fullname'])
-    params_array = np.array(file_params, dtype=np.float32).reshape(1, -1)
-    transformed_params = sc.transform(params_array)
+        file_params = analyzer.analyze(data['fullname'])
+        params_array = np.array(file_params, dtype=np.float32).reshape(1, -1)
+        transformed_params = sc.transform(params_array)
 
-    # prediction = classifier.predict(transformed_params)
+        # prediction = classifier.predict(transformed_params)
 
-    probs = classifier.predict_proba(transformed_params)
-    best_n = np.argsort(probs, axis=1)
-    print(probs)
-    print(best_n)
+        probs = classifier.predict_proba(transformed_params)
+        best_n = np.argsort(probs, axis=1)
+        print(probs)
+        print(best_n)
 
-    response = {
-        'id': data['id'],
-        'status': 'finished',
-        'result': {
-            "probs": probs[0].tolist(),
-        },
-        'fullname': data['fullname'],
-    }
-    channel.basic_publish(exchange='', routing_key='detection-response', body=json.dumps(response))
+        response = {
+            'id': data['id'],
+            'status': 'finished',
+            'result': {
+                "probs": probs[0].tolist(),
+            },
+            'fullname': data['fullname'],
+        }
+        channel.basic_publish(exchange='', routing_key='detection-response', body=json.dumps(response))
+    except:
+        response = {
+            'id': data['id'],
+            'status': 'failed',
+            'result': {},
+            'fullname': data['fullname'],
+        }
+        channel.basic_publish(exchange='', routing_key='detection-response', body=json.dumps(response))
