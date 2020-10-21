@@ -12,4 +12,4 @@ RUN yarn && yarn cache clean
 
 EXPOSE 7001
 
-CMD ["npm", "dev"]
+CMD ["nodemon", "server.js"]
