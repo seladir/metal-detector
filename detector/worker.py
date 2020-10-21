@@ -1,3 +1,4 @@
+import time
 import pika, sys, os, json
 import detector
 
@@ -21,6 +22,7 @@ def main():
     receive_channel.start_consuming()
 
 
+time.sleep(10)
 if __name__ == '__main__':
     try:
         main()

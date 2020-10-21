@@ -1,8 +1,7 @@
 {
-  "name": "material-dashboard-react",
-  "version": "1.9.0",
-  "description": "Material Dashboard React. Coded by Creative Tim",
-  "private": false,
+  "name": "Metal_Detector",
+  "version": "0.1.0",
+  "private": true,
   "main": "dist/index.js",
   "dependencies": {
     "@material-ui/core": "4.10.0",
@@ -41,7 +40,7 @@
   "bugs": {
     "url": "https://github.com/creativetimofficial/material-dashboard-react/issues"
   },
-  "homepage": "https://creativetimofficial.github.io/material-dashboard-react/#/dashboard",
+  "homepage": "https://metal.selin.dev",
   "optionalDependencies": {
     "@types/googlemaps": "3.39.6",
     "@types/markerclustererplus": "2.1.33",

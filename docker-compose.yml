@@ -26,18 +26,22 @@ services:
             - ./api:/usr/src/app
             - ./shared:/usr/src/shared
         environment:
-            NODE_ENV: development
+            NODE_ENV: production
             PORT: 7001
-            CLIENT_HOST: http://web:3000
-            DB_USERNAME: sankaku
-            DATABASE: sankaku_payments_dev
-            DB_HOST: db
-            DB_DIALECT: postgres
         links:
             - redis:redis
         depends_on:
             - redis
             - mq
+    web:
+        build:
+            context: ./app
+            dockerfile: Dockerfile
+            args:
+                NODE_ENV: production
+                API_URL: http://localhost:7001
+        ports:
+            - '7002:80'
     redis:
         image: "redis:6-alpine"
     mq:
